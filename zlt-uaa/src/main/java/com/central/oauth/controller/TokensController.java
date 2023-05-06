@@ -6,8 +6,6 @@ import com.central.common.model.Result;
 import com.central.oauth.model.TokenVo;
 import com.central.oauth.service.ITokensService;
 import com.central.oauth2.common.util.AuthUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -15,7 +13,10 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +31,6 @@ import java.util.stream.Collectors;
  *
  * @author zlt
  */
-@Api(tags = "Token管理")
 @Slf4j
 @RestController
 @RequestMapping("/tokens")
@@ -44,14 +44,18 @@ public class TokensController {
     @Resource
     private PasswordEncoder passwordEncoder;
 
+    /**
+     * token列表
+     */
     @GetMapping("")
-    @ApiOperation(value = "token列表")
     public PageResult<TokenVo> list(@RequestParam Map<String, Object> params, String tenantId) {
         return tokensService.listTokens(params, tenantId);
     }
 
+    /**
+     * 获取jwt密钥
+     */
     @GetMapping("/key")
-    @ApiOperation(value = "获取jwt密钥")
     public Result<String> key(HttpServletRequest request) {
         try {
             String[] clientArr = AuthUtils.extractClient(request);

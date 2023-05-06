@@ -8,9 +8,3 @@ spring:
 zlt:
   indices:
     show: sys-log-*,mysql-slowlog-*,sys_user,point-log-*,audit-log-*
-  swagger:
-    enabled: true
-    title: 搜索中心
-    description: 搜索中心接口文档
-    version: 1.0
-    base-package: com.central.search.controller

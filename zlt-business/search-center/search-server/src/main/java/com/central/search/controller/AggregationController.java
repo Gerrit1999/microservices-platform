@@ -1,9 +1,11 @@
 package com.central.search.controller;
 
 import com.central.search.service.IAggregationService;
-import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.Map;
@@ -16,7 +18,6 @@ import java.util.Map;
  */
 @Slf4j
 @RestController
-@Api(tags = "搜索模块api")
 @RequestMapping("/agg")
 public class AggregationController {
     private final IAggregationService aggregationService;

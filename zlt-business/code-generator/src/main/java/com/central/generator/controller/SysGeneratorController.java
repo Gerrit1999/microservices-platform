@@ -1,23 +1,26 @@
 package com.central.generator.controller;
 
-import java.io.IOException;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletResponse;
-
 import com.central.common.model.PageResult;
 import com.central.generator.service.SysGeneratorService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import io.swagger.annotations.Api;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Map;
+
 
 /**
+ * 代码生成器
+ *
  * @Author: zlt
  */
 @RestController
-@Api(tags = "代码生成器")
 @RequestMapping("/generator")
 public class SysGeneratorController {
     @Autowired

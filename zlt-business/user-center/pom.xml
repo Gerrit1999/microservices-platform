@@ -38,11 +38,6 @@
             <groupId>com.zlt</groupId>
             <artifactId>zlt-sentinel-spring-boot-starter</artifactId>
         </dependency>
-        <!-- swagger -->
-        <dependency>
-            <groupId>com.zlt</groupId>
-            <artifactId>zlt-swagger2-spring-boot-starter</artifactId>
-        </dependency>
         <dependency>
             <groupId>com.zlt</groupId>
             <artifactId>search-client</artifactId>
@@ -62,8 +57,8 @@
         </dependency>
 
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
         </dependency>
 
         <dependency>

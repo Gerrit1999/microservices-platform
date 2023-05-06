@@ -1,14 +1,15 @@
 package com.central.search.controller;
 
-import com.central.common.model.*;
-
+import com.central.common.model.PageResult;
 import com.central.search.model.SearchDto;
 import com.central.search.service.ISearchService;
 import com.fasterxml.jackson.databind.JsonNode;
-import org.springframework.web.bind.annotation.*;
-
-import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 
@@ -19,7 +20,6 @@ import java.io.IOException;
  */
 @Slf4j
 @RestController
-@Api(tags = "搜索模块api")
 @RequestMapping("/search")
 public class SearchController {
     private final ISearchService searchService;
@@ -30,6 +30,7 @@ public class SearchController {
 
     /**
      * 查询文档列表
+     *
      * @param indexName 索引名
      * @param searchDto 搜索Dto
      */

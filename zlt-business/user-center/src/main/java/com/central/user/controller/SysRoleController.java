@@ -1,8 +1,9 @@
 package com.central.user.controller;
 
-import java.util.List;
-import java.util.Map;
-
+import com.central.common.model.PageResult;
+import com.central.common.model.Result;
+import com.central.common.model.SysRole;
+import com.central.user.service.ISysRoleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,13 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.central.common.model.PageResult;
-import com.central.common.model.Result;
-import com.central.common.model.SysRole;
-import com.central.user.service.ISysRoleService;
+import java.util.List;
+import java.util.Map;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 
 /**
  * @author 作者 owen E-mail: 624191343@qq.com
@@ -27,17 +24,16 @@ import io.swagger.annotations.ApiOperation;
  */
 @Slf4j
 @RestController
-@Api(tags = "角色模块api")
 public class SysRoleController {
     @Autowired
     private ISysRoleService sysRoleService;
 
     /**
      * 后台管理查询角色
+     *
      * @param params
      * @return
      */
-    @ApiOperation(value = "后台管理查询角色")
     @GetMapping("/roles")
     public PageResult<SysRole> findRoles(@RequestParam Map<String, Object> params) {
         return sysRoleService.findRoles(params);
@@ -45,9 +41,9 @@ public class SysRoleController {
 
     /**
      * 用户管理查询所有角色
+     *
      * @return
      */
-    @ApiOperation(value = "后台管理查询角色")
     @GetMapping("/allRoles")
     public Result<List<SysRole>> findAll() {
         List<SysRole> result = sysRoleService.findAll();
@@ -71,7 +67,6 @@ public class SysRoleController {
      *
      * @param id
      */
-    @ApiOperation(value = "后台管理删除角色")
     @DeleteMapping("/roles/{id}")
     public Result deleteRole(@PathVariable Long id) {
         try {
