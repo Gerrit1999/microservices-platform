@@ -5,3 +5,6 @@ target/
 
 *.iml
 *.versionsBackup
+**/src/main/resources/*-dev.yml
+**/src/main/resources/*-test.yml
+**/src/main/resources/*-prod.yml
