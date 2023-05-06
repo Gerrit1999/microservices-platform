@@ -1,0 +1,45 @@
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # mybatis-plus打印完整sql(只适用于开发环境)
+spring:
+  # redis配置
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    timeout: 5000
+    database: 0
+zlt:
+  # 数据库配置
+  datasource:
+    ip: 192.168.28.130
+    password: 1q2w3e4r
+    username: root
+  # elasticsearch配置
+  elasticsearch:
+    password: qEnNfKNujqNrOPD9q5kb
+    uris: 192.168.28.130:9200
+    username: elastic
+  # fastDFS配置
+  fdfs:
+    trackerList: ${zlt.fdfs.web-url}:22122
+    web-url: 192.168.28.130
+  # 负载均衡隔离(version隔离，只适用于开发环境)
+  ribbon:
+    isolation:
+      enabled: false
+  # s3配置
+  s3:
+    access-key: minioadmin
+    accessKeySecret: minioadmin
+    bucketName: test
+    endpoint: http://192.168.28.130:9000
+  # sentinel配置
+  sentinel:
+    dashboard: 192.168.28.130:6999
+  # 日志链路追踪
+  trace:
+    enable: true
+
+#  loadbalance:
+#    isolation:
+#      enabled: true # 开启版本路由

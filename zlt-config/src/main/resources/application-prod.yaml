@@ -1,0 +1,27 @@
+spring:
+  redis:
+    password: ''
+    sentinel:
+      master: mymaster
+      nodes: 172.17.0.1
+zlt:
+  datasource:
+    ip: 192.168.28.131
+    password: 1q2w3e4r
+    username: root
+  elasticsearch:
+    password: ''
+    uris: 192.168.28.130:9200
+    username: ''
+  fdfs:
+    trackerList: ${zlt.fdfs.web-url}:22122
+    web-url: 192.168.28.130
+  s3:
+    access-key: minioadmin
+    accessKeySecret: minioadmin
+    bucketName: test
+    endpoint: http://192.168.28.130:9000
+  sentinel:
+    dashboard: 192.168.28.130:6999
+  trace:
+    enable: true
