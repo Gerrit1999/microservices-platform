@@ -1,4 +1,5 @@
-Set schema 'tx_logger';
+CREATE SCHEMA IF NOT EXISTS "tx-logger";
+Set schema 'tx-logger';
 
 -- SQLINES DEMO *** -----------
 -- SQLINES DEMO *** or t_logger

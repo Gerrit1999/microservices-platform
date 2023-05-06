@@ -1,4 +1,5 @@
-Set schema 'file_center';
+CREATE SCHEMA IF NOT EXISTS "file-center";
+Set schema 'file-center';
 
 -- SQLINES DEMO *** -----------
 -- SQLINES DEMO *** or file_info

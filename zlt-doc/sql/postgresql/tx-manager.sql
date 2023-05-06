@@ -1,3 +1,4 @@
+CREATE SCHEMA IF NOT EXISTS "tx-manager";
 Set schema 'tx-manager';
 
 -- SQLINES DEMO *** -----------

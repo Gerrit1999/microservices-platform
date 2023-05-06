@@ -1,3 +1,4 @@
+CREATE SCHEMA IF NOT EXISTS "oauth-center";
 Set schema 'oauth-center';
 
 -- SQLINES DEMO *** -----------

@@ -1,13 +1,14 @@
+CREATE SCHEMA IF NOT EXISTS "user-center";
 SET SCHEMA 'user-center';
 -- SQLINES DEMO *** -----------
 -- SQLINES DEMO *** or sys_user
 -- SQLINES DEMO *** -----------
 DROP TABLE
-    IF
-        EXISTS sys_user;
+        IF
+                EXISTS sys_user;
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
 DROP SEQUENCE
-    IF
+        IF
         EXISTS sys_user_seq;
 CREATE SEQUENCE sys_user_seq;
 CREATE TABLE sys_user
