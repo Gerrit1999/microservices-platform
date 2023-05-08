@@ -4,7 +4,7 @@
 <mapper namespace="com.central.user.mapper.SysUserMapper">
 	<sql id="where">
 		<where>
-			t.is_del=0
+			not t.is_del
 			<if test="u.id != null and u.id != ''">
 				and t.id like concat('%', #{u.id}, '%')
 			</if>

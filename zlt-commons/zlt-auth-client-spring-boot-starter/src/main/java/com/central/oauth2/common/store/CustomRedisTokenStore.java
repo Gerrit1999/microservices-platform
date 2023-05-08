@@ -135,11 +135,8 @@ public class CustomRedisTokenStore implements TokenStore {
         String key = authenticationKeyGenerator.extractKey(authentication);
         byte[] serializedKey = serializeKey(AUTH_TO_ACCESS + key);
         byte[] bytes;
-        RedisConnection conn = getConnection();
-        try {
+        try (RedisConnection conn = getConnection()) {
             bytes = conn.get(serializedKey);
-        } finally {
-            conn.close();
         }
         OAuth2AccessToken accessToken = deserializeAccessToken(bytes);
         if (accessToken != null) {
@@ -193,9 +190,9 @@ public class CustomRedisTokenStore implements TokenStore {
         List<String> includeClientIds = securityProperties.getAuth().getRenew().getIncludeClientIds();
         //黑名单
         List<String> exclusiveClientIds = securityProperties.getAuth().getRenew().getExclusiveClientIds();
-        if (includeClientIds.size() > 0) {
+        if (!includeClientIds.isEmpty()) {
             result = includeClientIds.contains(clientId);
-        } else if (exclusiveClientIds.size() > 0) {
+        } else if (!exclusiveClientIds.isEmpty()) {
             result = !exclusiveClientIds.contains(clientId);
         }
         return result;
@@ -228,11 +225,8 @@ public class CustomRedisTokenStore implements TokenStore {
     @Override
     public OAuth2Authentication readAuthentication(String token) {
         byte[] bytes;
-        RedisConnection conn = getConnection();
-        try {
+        try (RedisConnection conn = getConnection()) {
             bytes = conn.get(serializeKey(SecurityConstants.REDIS_TOKEN_AUTH + token));
-        } finally {
-            conn.close();
         }
         return deserializeAuthentication(bytes);
     }
@@ -243,12 +237,9 @@ public class CustomRedisTokenStore implements TokenStore {
     }
 
     public OAuth2Authentication readAuthenticationForRefreshToken(String token) {
-        RedisConnection conn = getConnection();
-        try {
+        try (RedisConnection conn = getConnection()) {
             byte[] bytes = conn.get(serializeKey(REFRESH_AUTH + token));
             return deserializeAuthentication(bytes);
-        } finally {
-            conn.close();
         }
     }
 
@@ -360,11 +351,8 @@ public class CustomRedisTokenStore implements TokenStore {
     public OAuth2AccessToken readAccessToken(String tokenValue) {
         byte[] key = serializeKey(ACCESS + tokenValue);
         byte[] bytes;
-        RedisConnection conn = getConnection();
-        try {
+        try (RedisConnection conn = getConnection()) {
             bytes = conn.get(key);
-        } finally {
-            conn.close();
         }
         return deserializeAccessToken(bytes);
     }
@@ -374,8 +362,7 @@ public class CustomRedisTokenStore implements TokenStore {
         byte[] accessBakKey = serializeKey(ACCESS_BAK + tokenValue);
         byte[] authKey = serializeKey(SecurityConstants.REDIS_TOKEN_AUTH + tokenValue);
         byte[] accessToRefreshKey = serializeKey(ACCESS_TO_REFRESH + tokenValue);
-        RedisConnection conn = getConnection();
-        try {
+        try (RedisConnection conn = getConnection()) {
             byte[] access = conn.get(accessKey);
             byte[] auth = conn.get(authKey);
             conn.openPipeline();
@@ -399,8 +386,6 @@ public class CustomRedisTokenStore implements TokenStore {
                 conn.del(serialize(ACCESS + key));
                 conn.closePipeline();
             }
-        } finally {
-            conn.close();
         }
     }
 
@@ -409,8 +394,7 @@ public class CustomRedisTokenStore implements TokenStore {
         byte[] refreshKey = serializeKey(REFRESH + refreshToken.getValue());
         byte[] refreshAuthKey = serializeKey(REFRESH_AUTH + refreshToken.getValue());
         byte[] serializedRefreshToken = serialize(refreshToken);
-        RedisConnection conn = getConnection();
-        try {
+        try (RedisConnection conn = getConnection()) {
             conn.openPipeline();
             if (springDataRedis_2_0) {
                 try {
@@ -425,8 +409,6 @@ public class CustomRedisTokenStore implements TokenStore {
             }
             expireRefreshToken(refreshToken, conn, refreshKey, refreshAuthKey);
             conn.closePipeline();
-        } finally {
-            conn.close();
         }
     }
 
@@ -447,11 +429,8 @@ public class CustomRedisTokenStore implements TokenStore {
     public OAuth2RefreshToken readRefreshToken(String tokenValue) {
         byte[] key = serializeKey(REFRESH + tokenValue);
         byte[] bytes;
-        RedisConnection conn = getConnection();
-        try {
+        try (RedisConnection conn = getConnection()) {
             bytes = conn.get(key);
-        } finally {
-            conn.close();
         }
         return deserializeRefreshToken(bytes);
     }
@@ -466,16 +445,13 @@ public class CustomRedisTokenStore implements TokenStore {
         byte[] refreshAuthKey = serializeKey(REFRESH_AUTH + tokenValue);
         byte[] refresh2AccessKey = serializeKey(REFRESH_TO_ACCESS + tokenValue);
         byte[] access2RefreshKey = serializeKey(ACCESS_TO_REFRESH + tokenValue);
-        RedisConnection conn = getConnection();
-        try {
+        try (RedisConnection conn = getConnection()) {
             conn.openPipeline();
             conn.del(refreshKey);
             conn.del(refreshAuthKey);
             conn.del(refresh2AccessKey);
             conn.del(access2RefreshKey);
             conn.closePipeline();
-        } finally {
-            conn.close();
         }
     }
 
@@ -507,11 +483,8 @@ public class CustomRedisTokenStore implements TokenStore {
     public Collection<OAuth2AccessToken> findTokensByClientIdAndUserName(String clientId, String userName) {
         byte[] approvalKey = serializeKey(SecurityConstants.REDIS_UNAME_TO_ACCESS + getApprovalKey(clientId, userName));
         List<byte[]> byteList;
-        RedisConnection conn = getConnection();
-        try {
+        try (RedisConnection conn = getConnection()) {
             byteList = conn.lRange(approvalKey, 0, -1);
-        } finally {
-            conn.close();
         }
         return getTokenCollections(byteList);
     }
@@ -520,17 +493,14 @@ public class CustomRedisTokenStore implements TokenStore {
     public Collection<OAuth2AccessToken> findTokensByClientId(String clientId) {
         byte[] key = serializeKey(SecurityConstants.REDIS_CLIENT_ID_TO_ACCESS + clientId);
         List<byte[]> byteList;
-        RedisConnection conn = getConnection();
-        try {
+        try (RedisConnection conn = getConnection()) {
             byteList = conn.lRange(key, 0, -1);
-        } finally {
-            conn.close();
         }
         return getTokenCollections(byteList);
     }
 
     private Collection<OAuth2AccessToken> getTokenCollections(List<byte[]> byteList) {
-        if (byteList == null || byteList.size() == 0) {
+        if (byteList == null || byteList.isEmpty()) {
             return Collections.emptySet();
         }
         List<OAuth2AccessToken> accessTokens = new ArrayList<>(byteList.size());

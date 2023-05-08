@@ -10,7 +10,7 @@ CREATE TABLE file_info
 (
     id           varchar(32)   NOT NULL,
     name         varchar(128)  NOT NULL,
-    is_img       smallint      NOT NULL,
+    is_img       BOOL          NOT NULL,
     content_type varchar(128)  NOT NULL,
     size         int           NOT NULL,
     path         varchar(255)  NULL DEFAULT NULL,

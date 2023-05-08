@@ -26,7 +26,7 @@ public class CustomAuthenticationManager implements ReactiveAuthenticationManage
     @Override
     public Mono<Authentication> authenticate(Authentication authentication) {
         return Mono.justOrEmpty(authentication)
-                .filter(a -> a instanceof BearerTokenAuthenticationToken)
+                .filter(BearerTokenAuthenticationToken.class::isInstance)
                 .cast(BearerTokenAuthenticationToken.class)
                 .map(BearerTokenAuthenticationToken::getToken)
                 .flatMap((accessTokenValue -> {

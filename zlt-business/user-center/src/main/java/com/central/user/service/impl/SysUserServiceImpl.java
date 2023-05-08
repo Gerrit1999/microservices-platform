@@ -1,21 +1,27 @@
 package com.central.user.service.impl;
 
-import java.util.*;
-import java.util.stream.Collectors;
-
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.central.common.constant.CommonConstant;
 import com.central.common.context.LoginUserContextHolder;
 import com.central.common.lock.DistributedLock;
-import com.central.common.model.*;
+import com.central.common.model.LoginAppUser;
+import com.central.common.model.PageResult;
+import com.central.common.model.Result;
+import com.central.common.model.SuperEntity;
+import com.central.common.model.SysMenu;
+import com.central.common.model.SysRole;
+import com.central.common.model.SysUser;
+import com.central.common.model.UserType;
 import com.central.common.service.impl.SuperServiceImpl;
 import com.central.user.mapper.SysRoleMenuMapper;
+import com.central.user.mapper.SysUserMapper;
 import com.central.user.model.SysRoleUser;
 import com.central.user.model.SysUserExcel;
-import com.central.user.mapper.SysUserMapper;
 import com.central.user.service.ISysRoleUserService;
+import com.central.user.service.ISysUserService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -26,11 +32,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import com.central.user.service.ISysUserService;
-
-import lombok.extern.slf4j.Slf4j;
-
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author 作者 owen E-mail: 624191343@qq.com
@@ -84,7 +93,7 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
                 Set<Long> roleIds = sysRoles.stream().map(SuperEntity::getId).collect(Collectors.toSet());
                 List<SysMenu> menus = roleMenuMapper.findMenusByRoleIds(roleIds, CommonConstant.PERMISSION);
                 if (!CollectionUtils.isEmpty(menus)) {
-                    Set<String> permissions = menus.stream().map(p -> p.getPath())
+                    Set<String> permissions = menus.stream().map(SysMenu::getPath)
                             .collect(Collectors.toSet());
                     // 设置权限集合
                     loginAppUser.setPermissions(permissions);

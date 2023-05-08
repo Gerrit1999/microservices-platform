@@ -9,26 +9,26 @@ DROP TABLE
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
 DROP SEQUENCE
         IF
-        EXISTS sys_user_seq;
+                EXISTS sys_user_seq;
 CREATE SEQUENCE sys_user_seq;
 CREATE TABLE sys_user
 (
-    ID           INT           NOT NULL DEFAULT NEXTVAL('sys_user_seq'),
-    username     VARCHAR(50)   NOT NULL,
-    PASSWORD     VARCHAR(100)  NOT NULL,
-    nickname     VARCHAR(255)  NULL     DEFAULT NULL,
-    head_img_url VARCHAR(1024) NULL     DEFAULT NULL,
-    mobile       VARCHAR(11)   NULL     DEFAULT NULL,
-    sex          SMALLINT      NULL     DEFAULT NULL,
-    enabled      SMALLINT      NOT NULL DEFAULT 1,
-    TYPE         VARCHAR(16)   NOT NULL,
-    create_time  TIMESTAMP(0)  NULL     DEFAULT NULL,
-    update_time  TIMESTAMP(0)  NULL     DEFAULT NULL,
-    company      VARCHAR(255)  NULL,
-    open_id      VARCHAR(32)   NULL,
-    is_del       SMALLINT      NOT NULL DEFAULT 0,
-    creator_id   INT,
-    PRIMARY KEY (ID)
+        ID           INT           NOT NULL DEFAULT NEXTVAL('sys_user_seq'),
+        username     VARCHAR(50)   NOT NULL,
+        PASSWORD     VARCHAR(100)  NOT NULL,
+        nickname     VARCHAR(255)  NULL     DEFAULT NULL,
+        head_img_url VARCHAR(1024) NULL     DEFAULT NULL,
+        mobile       VARCHAR(11)   NULL     DEFAULT NULL,
+        sex          SMALLINT      NULL     DEFAULT NULL,
+        enabled      BOOL          NOT NULL DEFAULT TRUE,
+        TYPE         VARCHAR(16)   NOT NULL,
+        create_time  TIMESTAMP(0)  NULL     DEFAULT NULL,
+        update_time  TIMESTAMP(0)  NULL     DEFAULT NULL,
+        company      VARCHAR(255)  NULL,
+        open_id      VARCHAR(32)   NULL,
+        is_del       BOOL          NOT NULL DEFAULT FALSE,
+        creator_id   INT,
+        PRIMARY KEY (ID)
 );
 ALTER SEQUENCE sys_user_seq RESTART WITH 27;
 DROP INDEX
@@ -55,13 +55,13 @@ VALUES (1,
         'http://pkqtmn0p1.bkt.clouddn.com/头像.png',
         '18888888888',
         0,
-        1,
+        true,
         'APP',
         '2017-11-17 16:56:59',
         '2019-01-08 17:05:47',
         'ENGJ',
         '123',
-        0,
+        false,
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
 INSERT INTO sys_user
@@ -72,13 +72,13 @@ VALUES (2,
         'http://payo7kq4i.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720180819191900.jpg',
         '18888888887',
         1,
-        1,
+        true,
         'APP',
         '2017-11-17 16:56:59',
         NULL,
         'ENGJ',
         NULL,
-        0,
+        false,
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
 INSERT INTO sys_user
@@ -89,13 +89,13 @@ VALUES (3,
         'http://payo7kq4i.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720180819191900.jpg',
         '13851539156',
         0,
-        0,
+        false,
         'APP',
         '2017-11-17 16:56:59',
         '2018-09-07 03:27:40',
         'ENGJ',
         NULL,
-        0,
+        false,
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
 INSERT INTO sys_user
@@ -106,13 +106,13 @@ VALUES (4,
         NULL,
         '13530151800',
         1,
-        1,
+        true,
         'APP',
         '2018-09-07 14:20:51',
         '2018-11-15 01:45:36',
         'YCC',
         NULL,
-        0,
+        false,
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
 INSERT INTO sys_user
@@ -123,13 +123,13 @@ VALUES (5,
         NULL,
         '17587132062',
         0,
-        1,
+        true,
         'APP',
         '2018-09-08 04:52:25',
         '2018-09-16 01:48:00',
         'YCC',
         NULL,
-        0,
+        false,
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
 INSERT INTO sys_user
@@ -140,13 +140,13 @@ VALUES (6,
         NULL,
         '12345678901',
         0,
-        1,
+        true,
         'APP',
         '2018-09-11 08:02:25',
         '2018-09-14 06:49:54',
         'YCC',
         NULL,
-        0,
+        false,
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
 INSERT INTO sys_user
@@ -157,13 +157,13 @@ VALUES (7,
         NULL,
         '13245678906',
         0,
-        1,
+        true,
         'APP',
         '2018-09-19 01:33:54',
         '2018-09-19 01:33:54',
         'JFSC',
         NULL,
-        1,
+        true,
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
 INSERT INTO sys_user
@@ -174,13 +174,13 @@ VALUES (8,
         NULL,
         '12345678901',
         0,
-        1,
+        true,
         'APP',
         '2018-09-19 04:52:01',
         '2018-11-16 22:12:04',
         'JFSC',
         NULL,
-        1,
+        true,
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
 INSERT INTO sys_user
@@ -191,13 +191,13 @@ VALUES (9,
         'http://payo7kq4i.bkt.clouddn.com/C:\\Users\\GAOY91\\Pictures\\79f0f736afc37931a921fd59e3c4b74543a91170.jpg',
         '15599999991',
         1,
-        1,
+        true,
         'APP',
         '2018-09-19 04:57:39',
         NULL,
         'JFSC',
         NULL,
-        1,
+        true,
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
 INSERT INTO sys_user
@@ -208,13 +208,13 @@ VALUES (10,
         NULL,
         '11111111',
         0,
-        1,
+        true,
         'BACKEND',
         '2018-09-12 13:50:57',
         '2019-01-07 13:04:18',
         NULL,
         NULL,
-        1,
+        true,
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
 INSERT INTO sys_user
@@ -225,13 +225,13 @@ VALUES (11,
         NULL,
         '22222222',
         0,
-        1,
+        true,
         'BACKEND',
         '2018-09-11 08:02:25',
         '2018-09-14 06:49:54',
         NULL,
         NULL,
-        1,
+        true,
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
 INSERT INTO sys_user
@@ -242,13 +242,13 @@ VALUES (12,
         NULL,
         '1',
         0,
-        1,
+        true,
         'BACKEND',
         '2019-01-19 13:44:02',
         '2019-01-19 13:44:02',
         NULL,
         NULL,
-        1,
+        true,
         1);
 -- SQLINES DEMO *** -----------
 -- SQLINES DEMO *** or sys_role
@@ -365,21 +365,21 @@ DROP SEQUENCE
 CREATE SEQUENCE sys_menu_seq;
 CREATE TABLE sys_menu
 (
-    ID          INT           NOT NULL DEFAULT NEXTVAL('sys_menu_seq'),
-    parent_id   INT           NOT NULL,
-    NAME        VARCHAR(64)   NOT NULL,
-    url         VARCHAR(1024) NULL     DEFAULT NULL,
-    PATH        VARCHAR(1024) NULL     DEFAULT NULL,
-    path_method VARCHAR(10)   NULL     DEFAULT NULL,
-    css         VARCHAR(32)   NULL     DEFAULT NULL,
-    sort        INT           NOT NULL,
-    create_time TIMESTAMP(0)  NULL,
-    update_time TIMESTAMP(0)  NULL,
-    TYPE        SMALLINT      NOT NULL,
-    hidden      SMALLINT      NOT NULL DEFAULT 0,
-    tenant_id   VARCHAR(32)            DEFAULT '',
-    creator_id  INT,
-    PRIMARY KEY (ID)
+        ID          INT           NOT NULL DEFAULT NEXTVAL('sys_menu_seq'),
+        parent_id   INT           NOT NULL,
+        NAME        VARCHAR(64)   NOT NULL,
+        url         VARCHAR(1024) NULL     DEFAULT NULL,
+        PATH        VARCHAR(1024) NULL     DEFAULT NULL,
+        path_method VARCHAR(10)   NULL     DEFAULT NULL,
+        css         VARCHAR(32)   NULL     DEFAULT NULL,
+        sort        INT           NOT NULL,
+        create_time TIMESTAMP(0)  NULL,
+        update_time TIMESTAMP(0)  NULL,
+        TYPE        SMALLINT      NOT NULL,
+        hidden      BOOL          NOT NULL DEFAULT FALSE,
+        tenant_id   VARCHAR(32)            DEFAULT '',
+        creator_id  INT,
+        PRIMARY KEY (ID)
 );
 ALTER SEQUENCE sys_menu_seq RESTART WITH 62;
 DROP INDEX
@@ -406,7 +406,7 @@ VALUES (2,
         '2017-11-17 16:56:59',
         '2018-09-19 11:26:14',
         1,
-        0,
+        false,
         'webApp',
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
@@ -422,7 +422,7 @@ VALUES (3,
         '2017-11-17 16:56:59',
         '2019-01-14 15:34:40',
         1,
-        0,
+        false,
         'webApp',
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
@@ -438,7 +438,7 @@ VALUES (4,
         '2017-11-17 16:56:59',
         '2018-09-03 02:23:47',
         1,
-        0,
+        false,
         'webApp',
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
@@ -454,7 +454,7 @@ VALUES (9,
         '2017-11-17 16:56:59',
         '2019-01-17 20:18:44',
         1,
-        0,
+        false,
         'webApp',
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
@@ -470,7 +470,7 @@ VALUES (10,
         '2017-11-17 16:56:59',
         '2019-01-17 20:18:48',
         1,
-        0,
+        false,
         'webApp',
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
@@ -486,7 +486,7 @@ VALUES (11,
         '2017-11-17 16:56:59',
         '2018-09-02 06:12:24',
         1,
-        0,
+        false,
         'webApp',
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
@@ -501,7 +501,7 @@ VALUES (12, - 1,
         '2017-11-17 16:56:59',
         '2018-12-13 15:02:49',
         1,
-        0,
+        false,
         'webApp',
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
@@ -517,7 +517,7 @@ VALUES (35,
         '2017-11-17 16:56:59',
         '2019-01-14 15:35:15',
         1,
-        0,
+        false,
         'webApp',
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
@@ -532,7 +532,7 @@ VALUES (37, - 1,
         '2018-08-25 10:41:58',
         '2019-01-23 14:01:58',
         1,
-        0,
+        false,
         'webApp',
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
@@ -548,7 +548,7 @@ VALUES (62,
         '2019-01-08 15:32:19',
         '2019-01-17 20:22:44',
         1,
-        0,
+        false,
         'webApp',
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
@@ -563,7 +563,7 @@ VALUES (63, - 1,
         '2019-01-10 18:35:05',
         '2019-01-10 18:35:05',
         1,
-        0,
+        false,
         'webApp',
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
@@ -579,7 +579,7 @@ VALUES (64,
         '2019-01-10 18:35:55',
         '2019-01-12 00:27:20',
         1,
-        0,
+        false,
         'webApp',
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
@@ -595,7 +595,7 @@ VALUES (65,
         '2019-01-14 00:47:36',
         '2019-01-23 14:06:31',
         1,
-        0,
+        false,
         'webApp',
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
@@ -611,7 +611,7 @@ VALUES (66,
         '2019-01-16 12:00:27',
         '2019-01-16 15:32:31',
         1,
-        0,
+        false,
         'webApp',
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
@@ -626,7 +626,7 @@ VALUES (67, - 1,
         '2019-01-17 20:18:22',
         '2019-01-23 14:01:53',
         1,
-        0,
+        false,
         'webApp',
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
@@ -642,7 +642,7 @@ VALUES (68,
         '2019-01-22 16:31:55',
         '2019-01-22 16:34:03',
         1,
-        0,
+        false,
         'webApp',
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
@@ -658,7 +658,7 @@ VALUES (69,
         '2019-01-23 14:06:10',
         '2019-01-23 14:06:10',
         1,
-        0,
+        false,
         'webApp',
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
@@ -674,7 +674,7 @@ VALUES (70,
         '2019-02-27 10:31:55',
         '2019-02-27 10:31:55',
         1,
-        0,
+        false,
         'webApp',
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
@@ -689,7 +689,7 @@ VALUES (71, - 1,
         '2018-08-25 10:41:58',
         '2019-01-23 15:07:07',
         1,
-        0,
+        false,
         'webApp',
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
@@ -705,7 +705,7 @@ VALUES (72,
         '2019-01-10 18:35:55',
         '2019-01-12 00:27:20',
         1,
-        0,
+        false,
         'webApp',
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
@@ -721,7 +721,7 @@ VALUES (73,
         '2019-01-10 18:35:55',
         '2019-01-12 00:27:20',
         1,
-        0,
+        false,
         'webApp',
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
@@ -737,7 +737,7 @@ VALUES (74,
         '2019-07-11 16:56:59',
         '2019-07-11 16:56:59',
         1,
-        0,
+        false,
         'webApp',
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
@@ -753,7 +753,7 @@ VALUES (75,
         '2019-07-29 16:56:59',
         '2019-07-29 16:56:59',
         2,
-        0,
+        false,
         'webApp',
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
@@ -769,7 +769,7 @@ VALUES (76,
         '2019-07-29 16:56:59',
         '2019-07-29 16:56:59',
         2,
-        0,
+        false,
         'webApp',
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
@@ -785,7 +785,7 @@ VALUES (77,
         '2019-07-29 16:56:59',
         '2019-07-29 16:56:59',
         2,
-        0,
+        false,
         'webApp',
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
@@ -801,7 +801,7 @@ VALUES (78,
         '2019-07-29 16:56:59',
         '2019-07-29 16:56:59',
         2,
-        0,
+        false,
         'webApp',
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
@@ -817,7 +817,7 @@ VALUES (79,
         '2019-07-29 16:56:59',
         '2019-07-29 16:56:59',
         2,
-        0,
+        false,
         'webApp',
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
@@ -832,7 +832,7 @@ VALUES (80, - 1,
         '2019-08-06 20:02:12.604',
         '2019-08-06 20:02:12.604',
         1,
-        0,
+        false,
         'zlt',
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
@@ -847,7 +847,7 @@ VALUES (81, - 1,
         '2019-08-06 20:02:12.604',
         '2019-08-06 20:02:12.604',
         1,
-        0,
+        false,
         'zlt',
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
@@ -862,7 +862,7 @@ VALUES (82, - 1,
         '2019-08-06 20:02:12.604',
         '2019-08-06 20:02:12.604',
         1,
-        0,
+        false,
         'zlt',
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
@@ -877,7 +877,7 @@ VALUES (83, - 1,
         '2019-08-06 20:02:12.604',
         '2019-08-06 20:02:12.604',
         1,
-        0,
+        false,
         'zlt',
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
@@ -892,7 +892,7 @@ VALUES (84, - 1,
         '2019-08-06 20:02:12.604',
         '2019-08-06 20:02:12.604',
         1,
-        0,
+        false,
         'app',
         1);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
@@ -908,7 +908,7 @@ VALUES (85,
         '2020-02-04 12:00:27',
         '2020-02-04 15:32:31',
         1,
-        0,
+        false,
         'webApp',
         1);
 -- SQLINES DEMO *** -----------

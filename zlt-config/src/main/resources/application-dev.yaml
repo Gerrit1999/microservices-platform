@@ -7,7 +7,22 @@ spring:
     host: 127.0.0.1
     port: 6379
     timeout: 5000
-    database: 0
+    database: 3
+  ##### nacos(注册中心和配置中心)地址
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1
+        namespace: c3c0fe37-7eeb-4d32-8346-26ed2a734788
+      config:
+        server-addr: 127.0.0.1
+        namespace: c3c0fe37-7eeb-4d32-8346-26ed2a734788
+        file-extension: yaml
+        shared-configs:
+          - data-id: common.yml
+            refresh: true
+    config:
+      allow-override: false
 zlt:
   # 数据库配置
   datasource:
