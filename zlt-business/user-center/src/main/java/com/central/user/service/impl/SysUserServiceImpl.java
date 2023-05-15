@@ -106,6 +106,7 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
 
     /**
      * 根据用户名查询用户
+     *
      * @param username
      * @return
      */
@@ -119,6 +120,7 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
 
     /**
      * 根据手机号查询用户
+     *
      * @param mobile
      * @return
      */
@@ -132,6 +134,7 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
 
     /**
      * 根据openId查询用户
+     *
      * @param openId
      * @return
      */
@@ -240,8 +243,8 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
         }
         String username = sysUser.getUsername();
         boolean result = super.saveOrUpdateIdempotency(sysUser, lock
-                , LOCK_KEY_USERNAME+username, new QueryWrapper<SysUser>().eq("username", username)
-                , username+"已存在");
+                , LOCK_KEY_USERNAME + username, new QueryWrapper<SysUser>().eq("username", username)
+                , username + "已存在");
         //更新角色
         if (result && StrUtil.isNotEmpty(sysUser.getRoleId())) {
             roleUserService.deleteUserRole(sysUser.getId(), null);

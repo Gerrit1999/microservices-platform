@@ -12,10 +12,10 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 127.0.0.1
+        server-addr: 127.0.0.1:8848
         namespace: c3c0fe37-7eeb-4d32-8346-26ed2a734788
       config:
-        server-addr: 127.0.0.1
+        server-addr: 127.0.0.1:8848
         namespace: c3c0fe37-7eeb-4d32-8346-26ed2a734788
         file-extension: yaml
         shared-configs:
