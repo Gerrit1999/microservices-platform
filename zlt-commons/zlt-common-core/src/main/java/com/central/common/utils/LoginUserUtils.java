@@ -2,7 +2,7 @@ package com.central.common.utils;
 
 import cn.hutool.core.util.StrUtil;
 import com.central.common.constant.SecurityConstants;
-import com.central.common.dubbo.UserService;
+import com.central.common.dubbo.UserApi;
 import com.central.common.model.SysRole;
 import com.central.common.model.SysUser;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -48,9 +48,9 @@ public class LoginUserUtils {
 
             if (StrUtil.isAllNotBlank(username, userId)) {
                 if (isFull) {
-                    String serviceBeanName = StrUtil.lowerFirst(UserService.class.getSimpleName());
-                    UserService userService = SpringUtil.getBean(serviceBeanName, UserService.class);
-                    user = userService.selectByUsername(username);
+                    String serviceBeanName = StrUtil.lowerFirst(UserApi.class.getSimpleName());
+                    UserApi userApi = SpringUtil.getBean(serviceBeanName, UserApi.class);
+                    user = userApi.selectByUsername(username);
                 } else {
                     user = new SysUser();
                     user.setId(Long.valueOf(userId));

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -22,7 +23,7 @@ public class AggregationController {
      * 访问统计
      */
     @GetMapping(value = "/requestStat")
-    public Map<String, Object> requestStatAgg() {
+    public Map<String, Object> requestStatAgg() throws IOException {
         return queryService.requestStatAgg("point-log-*", "request-statistics");
     }
 }

@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
 import com.central.common.context.LoginUserContextHolder;
-import com.central.common.dubbo.UserService;
+import com.central.common.dubbo.UserApi;
 import com.central.common.enums.DataScope;
 import com.central.common.model.SysRole;
 import com.central.common.model.SysUser;
@@ -23,7 +23,7 @@ import java.util.Objects;
 public class CreatorDataScopeSqlHandler implements SqlHandler{
 
     @DubboReference(mock = "true")
-    UserService userService;
+    UserApi userApi;
 
     @Autowired
     private DataScopeProperties dataScopeProperties;
@@ -38,7 +38,7 @@ public class CreatorDataScopeSqlHandler implements SqlHandler{
     public String handleScopeSql() {
         SysUser user = LoginUserContextHolder.getUser();
         Assert.notNull(user, "登陆人不能为空");
-        List<SysRole> roleList = userService.findRolesByUserId(user.getId());
+        List<SysRole> roleList = userApi.findRolesByUserId(user.getId());
         return StrUtil.isBlank(dataScopeProperties.getCreatorIdColumnName())
                 ||CollUtil.isEmpty(roleList)
                 || roleList.stream().anyMatch(item-> Objects.isNull(item.getDataScope()) || DataScope.ALL.equals(item.getDataScope()))

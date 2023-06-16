@@ -3,7 +3,7 @@ package com.central.oauth.service.impl;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import com.central.common.constant.SecurityConstants;
-import com.central.common.dubbo.UserService;
+import com.central.common.dubbo.UserApi;
 import com.central.common.model.Result;
 import com.central.common.model.SysUser;
 import com.central.common.redis.template.RedisRepository;
@@ -28,7 +28,7 @@ public class ValidateCodeServiceImpl implements IValidateCodeService {
     private RedisRepository redisRepository;
 
     @DubboReference(mock = "true")
-    private UserService userService;
+    private UserApi userApi;
 
     /**
      * 保存用户验证码，和randomStr绑定
@@ -60,7 +60,7 @@ public class ValidateCodeServiceImpl implements IValidateCodeService {
             return Result.failed("验证码未失效，请失效后再次申请");
         }
 
-        SysUser user = userService.findByMobile(mobile);
+        SysUser user = userApi.findByMobile(mobile);
         if (user == null) {
             log.error("根据用户手机号{}查询用户为空", mobile);
             return Result.failed("手机号不存在");

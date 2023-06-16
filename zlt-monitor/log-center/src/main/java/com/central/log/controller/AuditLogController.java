@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+
 /**
  * 审计日志
  *
@@ -28,7 +30,7 @@ public class AuditLogController {
      * 审计日志全文搜索列表
      */
     @GetMapping(value = "/auditLog")
-    public PageResult<JsonNode> getPage(SearchDto searchDto) {
+    public PageResult<JsonNode> getPage(SearchDto searchDto) throws IOException {
         searchDto.setIsHighlighter(true);
         searchDto.setSortCol("timestamp");
         return queryService.strQuery("audit-log-*", searchDto);

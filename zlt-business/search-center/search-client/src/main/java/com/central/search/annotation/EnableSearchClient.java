@@ -1,8 +1,6 @@
 package com.central.search.annotation;
 
-import com.central.search.client.feign.fallback.SearchServiceFallbackFactory;
 import com.central.search.client.service.impl.QueryServiceImpl;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.ElementType;
@@ -17,8 +15,7 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@EnableFeignClients(basePackages = "com.central")
-@Import({SearchServiceFallbackFactory.class, QueryServiceImpl.class})
+@Import({QueryServiceImpl.class})
 public @interface EnableSearchClient {
 
 }

@@ -266,7 +266,7 @@ public class SysUserController {
      * 用户全文搜索列表
      */
     @GetMapping("/users/search")
-    public PageResult<JsonNode> search(SearchDto searchDto) {
+    public PageResult<JsonNode> search(SearchDto searchDto) throws IOException {
         searchDto.setIsHighlighter(true);
         searchDto.setSortCol("createTime");
         return queryService.strQuery("sys_user", searchDto, SEARCH_LOGIC_DEL_DTO);

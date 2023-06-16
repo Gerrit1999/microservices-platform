@@ -8,7 +8,7 @@ import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.elasticsearch.client.RestClientBuilder;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchRestClientProperties;
+import org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchProperties;
 import org.springframework.boot.autoconfigure.elasticsearch.RestClientBuilderCustomizer;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.context.properties.PropertyMapper;
@@ -28,18 +28,18 @@ import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 public class RestAutoConfigure {
     @Bean
     public RestClientBuilderCustomizer restClientBuilderCustomizer(RestClientPoolProperties poolProperties
-            , ElasticsearchRestClientProperties restProperties) {
+            , ElasticsearchProperties elasticsearchProperties) {
         return (builder) -> {
             setRequestConfig(builder, poolProperties);
 
-            setHttpClientConfig(builder, poolProperties, restProperties);
+            setHttpClientConfig(builder, poolProperties, elasticsearchProperties);
         };
     }
 
     /**
      * 异步httpclient连接延时配置
      */
-    private void setRequestConfig(RestClientBuilder builder, RestClientPoolProperties poolProperties){
+    private void setRequestConfig(RestClientBuilder builder, RestClientPoolProperties poolProperties) {
         builder.setRequestConfigCallback(requestConfigBuilder -> {
             requestConfigBuilder.setConnectTimeout(poolProperties.getConnectTimeOut())
                     .setSocketTimeout(poolProperties.getSocketTimeOut())
@@ -51,16 +51,16 @@ public class RestAutoConfigure {
     /**
      * 异步httpclient连接数配置
      */
-    private void setHttpClientConfig(RestClientBuilder builder, RestClientPoolProperties poolProperties, ElasticsearchRestClientProperties restProperties){
+    private void setHttpClientConfig(RestClientBuilder builder, RestClientPoolProperties poolProperties, ElasticsearchProperties elasticsearchProperties) {
         builder.setHttpClientConfigCallback(httpClientBuilder -> {
             httpClientBuilder.setMaxConnTotal(poolProperties.getMaxConnectNum())
                     .setMaxConnPerRoute(poolProperties.getMaxConnectPerRoute());
 
             PropertyMapper map = PropertyMapper.get().alwaysApplyingWhenNonNull();
-            map.from(restProperties::getUsername).to(username -> {
+            map.from(elasticsearchProperties::getUsername).to(username -> {
                 CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
                 credentialsProvider.setCredentials(AuthScope.ANY,
-                        new UsernamePasswordCredentials(username, restProperties.getPassword()));
+                        new UsernamePasswordCredentials(username, elasticsearchProperties.getPassword()));
                 httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider);
             });
             return httpClientBuilder;

@@ -2,14 +2,15 @@ package com.central.search.client.service.impl;
 
 import cn.hutool.core.util.StrUtil;
 import com.central.common.model.PageResult;
-import com.central.search.client.feign.AggregationService;
-import com.central.search.client.feign.SearchService;
+import com.central.search.client.dubbo.AggregationApi;
+import com.central.search.client.dubbo.SearchApi;
 import com.central.search.client.service.IQueryService;
 import com.central.search.model.LogicDelDto;
 import com.central.search.model.SearchDto;
 import com.fasterxml.jackson.databind.JsonNode;
+import org.apache.dubbo.config.annotation.DubboReference;
 
-import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -19,26 +20,28 @@ import java.util.Map;
  * @date 2019/4/24
  */
 public class QueryServiceImpl implements IQueryService {
-    @Resource
-    private SearchService searchService;
 
-    @Resource
-    private AggregationService aggregationService;
+    @DubboReference(mock = "true")
+    private SearchApi searchApi;
+
+    @DubboReference(mock = "true")
+    private AggregationApi aggregationApi;
 
     @Override
-    public PageResult<JsonNode> strQuery(String indexName, SearchDto searchDto) {
+    public PageResult<JsonNode> strQuery(String indexName, SearchDto searchDto) throws IOException {
         return strQuery(indexName, searchDto, null);
     }
 
     @Override
-    public PageResult<JsonNode> strQuery(String indexName, SearchDto searchDto, LogicDelDto logicDelDto) {
+    public PageResult<JsonNode> strQuery(String indexName, SearchDto searchDto, LogicDelDto logicDelDto) throws IOException {
         setLogicDelQueryStr(searchDto, logicDelDto);
-        return searchService.strQuery(indexName, searchDto);
+        return searchApi.strQuery(indexName, searchDto);
     }
 
     /**
      * 拼装逻辑删除的条件
-     * @param searchDto 搜索dto
+     *
+     * @param searchDto   搜索dto
      * @param logicDelDto 逻辑删除dto
      */
     private void setLogicDelQueryStr(SearchDto searchDto, LogicDelDto logicDelDto) {
@@ -61,11 +64,12 @@ public class QueryServiceImpl implements IQueryService {
 
     /**
      * 访问统计聚合查询
+     *
      * @param indexName 索引名
-     * @param routing es的路由
+     * @param routing   es的路由
      */
     @Override
-    public Map<String, Object> requestStatAgg(String indexName, String routing) {
-        return aggregationService.requestStatAgg(indexName, routing);
+    public Map<String, Object> requestStatAgg(String indexName, String routing) throws IOException {
+        return aggregationApi.requestStatAgg(indexName, routing);
     }
 }

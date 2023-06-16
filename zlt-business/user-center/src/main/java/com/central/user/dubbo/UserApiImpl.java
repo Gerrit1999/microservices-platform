@@ -1,7 +1,7 @@
 package com.central.user.dubbo;
 
 import cn.hutool.core.util.ObjectUtil;
-import com.central.common.dubbo.UserService;
+import com.central.common.dubbo.UserApi;
 import com.central.common.model.LoginAppUser;
 import com.central.common.model.SysRole;
 import com.central.common.model.SysUser;
@@ -17,7 +17,7 @@ import java.util.List;
  * @since 2023/5/8 10:36
  */
 @DubboService(filter = "consumerFilter")
-public class UserServiceImpl implements UserService {
+public class UserApiImpl implements UserApi {
 
     @Resource
     private ISysUserService appUserService;

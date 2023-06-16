@@ -1,7 +1,7 @@
 package com.central.oauth.service.impl;
 
 import com.central.common.constant.SecurityConstants;
-import com.central.common.dubbo.UserService;
+import com.central.common.dubbo.UserApi;
 import com.central.common.model.LoginAppUser;
 import com.central.oauth.service.ZltUserDetailsService;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ public class UserDetailServiceImpl implements ZltUserDetailsService {
     private static final String ACCOUNT_TYPE = SecurityConstants.DEF_ACCOUNT_TYPE;
 
     @DubboReference(mock = "true")
-    private UserService userService;
+    private UserApi userApi;
 
     @Override
     public boolean supports(String accountType) {
@@ -33,7 +33,7 @@ public class UserDetailServiceImpl implements ZltUserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        LoginAppUser loginAppUser = userService.findByUsername(username);
+        LoginAppUser loginAppUser = userApi.findByUsername(username);
         if (loginAppUser == null) {
             throw new InternalAuthenticationServiceException("用户名或密码错误");
         }
@@ -42,13 +42,13 @@ public class UserDetailServiceImpl implements ZltUserDetailsService {
 
     @Override
     public SocialUserDetails loadUserByUserId(String openId) {
-        LoginAppUser loginAppUser = userService.findByOpenId(openId);
+        LoginAppUser loginAppUser = userApi.findByOpenId(openId);
         return checkUser(loginAppUser);
     }
 
     @Override
     public UserDetails loadUserByMobile(String mobile) {
-        LoginAppUser loginAppUser = userService.findByMobile(mobile);
+        LoginAppUser loginAppUser = userApi.findByMobile(mobile);
         return checkUser(loginAppUser);
     }
 

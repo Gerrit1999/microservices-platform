@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class SysLogController {
      * 系统日志全文搜索列表
      */
     @GetMapping(value = "/sysLog")
-    public PageResult<JsonNode> sysLog(SearchDto searchDto) {
+    public PageResult<JsonNode> sysLog(SearchDto searchDto) throws IOException {
         return queryService.strQuery(SYS_LOG_INDEXNAME, searchDto);
     }
 
@@ -43,7 +44,7 @@ public class SysLogController {
      * 系统日志链路列表
      */
     @GetMapping(value = "/traceLog")
-    public PageResult<TraceLog> traceLog(SearchDto searchDto) {
+    public PageResult<TraceLog> traceLog(SearchDto searchDto) throws IOException {
         PageResult<JsonNode> pageResult = queryService.strQuery(SYS_LOG_INDEXNAME, searchDto);
         List<JsonNode> jsonNodeList = pageResult.getData();
         List<TraceLog> logList;

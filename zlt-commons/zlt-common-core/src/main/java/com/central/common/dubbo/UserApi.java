@@ -10,7 +10,7 @@ import java.util.List;
  * @author Gerrit
  * @since 2023/5/8 10:17
  */
-public interface UserService {
+public interface UserApi {
 
     /**
      * dubbo rpc访问远程/users/{username}接口

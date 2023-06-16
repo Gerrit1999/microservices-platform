@@ -1,6 +1,6 @@
 package com.central.common.config;
 
-import com.central.common.dubbo.UserService;
+import com.central.common.dubbo.UserApi;
 import com.central.common.resolver.ClientArgumentResolver;
 import com.central.common.resolver.TokenArgumentResolver;
 import org.apache.dubbo.config.annotation.DubboReference;
@@ -21,7 +21,7 @@ import java.util.List;
 public class DefaultWebMvcConfig implements WebMvcConfigurer {
 
     @DubboReference(mock = "true")
-    private UserService userService;
+    private UserApi userApi;
 
     /**
      * Token参数解析
@@ -31,7 +31,7 @@ public class DefaultWebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
         //注入用户信息
-        argumentResolvers.add(new TokenArgumentResolver(userService));
+        argumentResolvers.add(new TokenArgumentResolver(userApi));
         //注入应用信息
         argumentResolvers.add(new ClientArgumentResolver());
     }

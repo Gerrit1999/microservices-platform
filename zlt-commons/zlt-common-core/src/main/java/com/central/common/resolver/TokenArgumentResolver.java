@@ -2,7 +2,7 @@ package com.central.common.resolver;
 
 import com.central.common.annotation.LoginUser;
 import com.central.common.constant.SecurityConstants;
-import com.central.common.dubbo.UserService;
+import com.central.common.dubbo.UserApi;
 import com.central.common.model.SysUser;
 import com.central.common.utils.LoginUserUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -25,10 +25,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Slf4j
 public class TokenArgumentResolver implements HandlerMethodArgumentResolver {
-    private UserService userService;
+    private UserApi userApi;
 
-    public TokenArgumentResolver(UserService userService) {
-        this.userService = userService;
+    public TokenArgumentResolver(UserApi userApi) {
+        this.userApi = userApi;
     }
 
     /**

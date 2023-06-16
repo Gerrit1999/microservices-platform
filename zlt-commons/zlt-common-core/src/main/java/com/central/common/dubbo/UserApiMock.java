@@ -13,7 +13,7 @@ import java.util.List;
  * @since 2023/5/10 15:59
  */
 @Slf4j
-public class UserServiceMock implements UserService {
+public class UserApiMock implements UserApi {
 
     @Override
     public SysUser selectByUsername(String username) {

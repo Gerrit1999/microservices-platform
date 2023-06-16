@@ -5,6 +5,7 @@ import com.central.search.model.LogicDelDto;
 import com.central.search.model.SearchDto;
 import com.fasterxml.jackson.databind.JsonNode;
 
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -16,23 +17,26 @@ import java.util.Map;
 public interface IQueryService {
     /**
      * 查询文档列表
+     *
      * @param indexName 索引名
      * @param searchDto 搜索Dto
      */
-    PageResult<JsonNode> strQuery(String indexName, SearchDto searchDto);
+    PageResult<JsonNode> strQuery(String indexName, SearchDto searchDto) throws IOException;
 
     /**
      * 查询文档列表
-     * @param indexName 索引名
-     * @param searchDto 搜索Dto
+     *
+     * @param indexName   索引名
+     * @param searchDto   搜索Dto
      * @param logicDelDto 逻辑删除Dto
      */
-    PageResult<JsonNode> strQuery(String indexName, SearchDto searchDto, LogicDelDto logicDelDto);
+    PageResult<JsonNode> strQuery(String indexName, SearchDto searchDto, LogicDelDto logicDelDto) throws IOException;
 
     /**
      * 访问统计聚合查询
+     *
      * @param indexName 索引名
-     * @param routing es的路由
+     * @param routing   es的路由
      */
-    Map<String, Object> requestStatAgg(String indexName, String routing);
+    Map<String, Object> requestStatAgg(String indexName, String routing) throws IOException;
 }
