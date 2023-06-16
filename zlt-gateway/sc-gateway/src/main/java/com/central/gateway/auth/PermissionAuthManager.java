@@ -1,7 +1,7 @@
 package com.central.gateway.auth;
 
 import com.central.common.model.SysMenu;
-import com.central.gateway.feign.AsynMenuService;
+import com.central.gateway.dubbo.AsyncMenuApi;
 import com.central.oauth2.common.service.impl.DefaultPermissionServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -31,7 +31,7 @@ import java.util.concurrent.Future;
 @Component
 public class PermissionAuthManager extends DefaultPermissionServiceImpl implements ReactiveAuthorizationManager<AuthorizationContext> {
     @Resource
-    private AsynMenuService asynMenuService;
+    private AsyncMenuApi asyncMenuApi;
 
     @Override
     public Mono<AuthorizationDecision> check(Mono<Authentication> authentication, AuthorizationContext authorizationContext) {
@@ -45,7 +45,7 @@ public class PermissionAuthManager extends DefaultPermissionServiceImpl implemen
 
     @Override
     public List<SysMenu> findMenuByRoleCodes(String roleCodes) {
-        Future<List<SysMenu>> futureResult = asynMenuService.findByRoleCodes(roleCodes);
+        Future<List<SysMenu>> futureResult = asyncMenuApi.findByRoleCodes(roleCodes);
         try {
             return futureResult.get();
         } catch (Exception e) {

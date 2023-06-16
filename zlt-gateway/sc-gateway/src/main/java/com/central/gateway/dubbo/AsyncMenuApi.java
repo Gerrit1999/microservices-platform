@@ -1,13 +1,12 @@
-package com.central.gateway.feign;
+package com.central.gateway.dubbo;
 
+import com.central.common.dubbo.MenuApi;
 import com.central.common.model.SysMenu;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.concurrent.Future;
 
@@ -22,14 +21,14 @@ import java.util.concurrent.Future;
  * Github: https://github.com/zlt2000
  */
 @Component
-public class AsynMenuService {
-    @Lazy
-    @Resource
-    private MenuService menuService;
+public class AsyncMenuApi {
+
+    @DubboReference(mock = "true")
+    private MenuApi menuApi;
 
     @Async
     public Future<List<SysMenu>> findByRoleCodes(String roleCodes) {
-        List<SysMenu> result = menuService.findByRoleCodes(roleCodes);
+        List<SysMenu> result = menuApi.findByRoleCodes(roleCodes);
         return new AsyncResult<>(result);
     }
 }
