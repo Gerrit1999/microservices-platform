@@ -22,6 +22,22 @@ feign:
     enabled: true
   sentinel:
     enabled: true
+dubbo:
+  scan:
+    base-packages: com.central.*.dubbo
+  protocols:
+    dubbo:
+      name: dubbo
+      port: -1
+  registry:
+    address: nacos://${spring.cloud.nacos.discovery.server-addr}
+    parameters[namespace]: ${spring.cloud.nacos.discovery.namespace}
+  consumer:
+    timeout: 5000
+    check: false
+    retries: 0
+  cloud:
+    subscribed-services:
 logging:
   level:
     com.alibaba.nacos.client.naming: warn

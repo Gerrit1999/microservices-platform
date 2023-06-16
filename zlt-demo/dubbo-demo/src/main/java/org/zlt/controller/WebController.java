@@ -17,7 +17,7 @@ import org.zlt.service.RpcService;
 @Slf4j
 @RestController
 public class WebController {
-    @DubboReference
+    @DubboReference(mock = "true")
     private RpcService dubboService;
 
     @GetMapping("/test/{p}")

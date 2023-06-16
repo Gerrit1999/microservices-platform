@@ -4,11 +4,12 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
 import com.central.common.context.LoginUserContextHolder;
+import com.central.common.dubbo.UserService;
 import com.central.common.enums.DataScope;
-import com.central.common.feign.UserService;
 import com.central.common.model.SysRole;
 import com.central.common.model.SysUser;
 import com.central.common.properties.DataScopeProperties;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.Objects;
  */
 public class CreatorDataScopeSqlHandler implements SqlHandler{
 
-    @Autowired
+    @DubboReference(mock = "true")
     UserService userService;
 
     @Autowired

@@ -2,18 +2,17 @@ package com.central.oauth.service.impl;
 
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
-import com.central.common.feign.UserService;
-import com.central.common.redis.template.RedisRepository;
 import com.central.common.constant.SecurityConstants;
+import com.central.common.dubbo.UserService;
 import com.central.common.model.Result;
 import com.central.common.model.SysUser;
+import com.central.common.redis.template.RedisRepository;
 import com.central.oauth.exception.ValidateCodeException;
 import com.central.oauth.service.IValidateCodeService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
  * @author zlt
@@ -28,7 +27,7 @@ public class ValidateCodeServiceImpl implements IValidateCodeService {
     @Autowired
     private RedisRepository redisRepository;
 
-    @Resource
+    @DubboReference(mock = "true")
     private UserService userService;
 
     /**

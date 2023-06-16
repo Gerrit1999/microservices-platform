@@ -1,19 +1,16 @@
 package com.central.oauth.service.impl;
 
 import com.central.common.constant.SecurityConstants;
-import com.central.common.feign.UserService;
+import com.central.common.dubbo.UserService;
+import com.central.common.model.LoginAppUser;
 import com.central.oauth.service.ZltUserDetailsService;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.social.security.SocialUserDetails;
 import org.springframework.stereotype.Service;
-
-import com.central.common.model.LoginAppUser;
-
-import lombok.extern.slf4j.Slf4j;
-
-import javax.annotation.Resource;
 
 /**
  * @author zlt
@@ -26,7 +23,7 @@ import javax.annotation.Resource;
 public class UserDetailServiceImpl implements ZltUserDetailsService {
     private static final String ACCOUNT_TYPE = SecurityConstants.DEF_ACCOUNT_TYPE;
 
-    @Resource
+    @DubboReference(mock = "true")
     private UserService userService;
 
     @Override

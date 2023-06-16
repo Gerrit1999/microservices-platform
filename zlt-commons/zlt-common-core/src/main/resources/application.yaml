@@ -1,0 +1,4 @@
+spring:
+  dubbo:
+    provider:
+      filter: consumerFilter
